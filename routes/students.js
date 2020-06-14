@@ -27,7 +27,7 @@ router.get("/:id", async (req, res, next) => {
   // query the database for a student with matching id
   try {
     // if successful:
-    const student = await Student.findByPk(id);
+    const student = await Student.findByPk(id, { include: Campus });
     // send back the student as a response
     res.status(200).json(student);
   } catch (err) {
@@ -64,15 +64,16 @@ router.get("/:id/campus", async (req, res, next) => {
 // Route to handle adding a student
 // /api/students/
 router.post("/", async (req, res, next) => {
+    console.log(req.body);
   // Take the form data from the request body
-  const { firstname } = req.body;
+  const { firstName } = req.body;
   // Create a student object
   const studentObj = {
-    firstname: firstname,
+    firstName: firstName,
   };
   try {
     // Create a new student on the database
-    const newstudent = await student.create(studentObj);
+    const newstudent = await Student.create(studentObj);
     // The database would return a student
     // send that student as a json to the client
     res.status(201).send(newstudent);
@@ -88,24 +89,24 @@ router.put("/:id", async (req, res, next) => {
   // get the id from request params
   const { id } = req.params;
   // get form data from the request body
-  const { firstname } = req.body;
+  const { firstName } = req.body;
   const updatedObj = {
-    firstname: firstname,
+    firstName: firstName,
   };
   try {
     // if successfull:
     // Find a student with a matching id from the database
-    const student = await student.findByPk(id);
+    const student = await Student.findByPk(id);
     // database would return a valid student object or an error
     console.log(updatedObj);
     // modify the student object with new form data
     await student.set(updatedObj);
     // save the new student object to the data
     // database would return a new student object
-    const updatedstudent = await student.save();
-    console.log(updatedstudent);
+    const updatedStudent = await student.save();
+    console.log(updatedStudent);
     // send the newstudent as a response from the API
-    res.status(201).send(updatedstudent);
+    res.status(201).send(updatedStudent);
   } catch (err) {
     // if error:
     // handle the error
@@ -120,7 +121,7 @@ router.delete("/:id", async (req, res, next) => {
   try {
     // pass the id to the database to find student to be deleted
     // database would either respond succcess or fail
-    const student = await student.findByPk(id);
+    const student = await Student.findByPk(id);
     // invoke the .destroy() method on the returned student
     await student.destroy();
     // send a success message to the client
