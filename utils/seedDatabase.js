@@ -17,8 +17,10 @@ const seedDatabase = async () => {
       address: "Manhattan",
       description: "A college in Manhattan",
     }),
-    Student.create({ firstName: "Daniel" }),
-    Student.create({ firstName: "Sally", campusId: 1 }),
+    Student.create({ firstName: "Daniel", lastName: "Tao",email:"Daniel@gmail.com"}),
+    Student.create({ firstName: "Sally", lastName: "Chen",email:"chen@gmail.com", campusId: 1,gpa:3.4}),
+    Student.create({ firstName: "Annie", lastName: "Chen",email:"chenye@gmail.com", campusId: 1 }),
+    Student.create({ firstName: "Leon", lastName: "Xin",email:"Leon@gmail.com", campusId: 2, gpa:3.2}),
   ]);
 };
 

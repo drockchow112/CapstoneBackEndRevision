@@ -66,10 +66,15 @@ router.get("/:id/campus", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
     console.log(req.body);
   // Take the form data from the request body
-  const { firstName } = req.body;
+  const { firstName,lastName,email,imageUrl,gpa } = req.body;
   // Create a student object
   const studentObj = {
     firstName: firstName,
+    lastName: lastName,
+    email:email,
+    imageUrl:imageUrl,
+    gpa:gpa,
+
   };
   try {
     // Create a new student on the database
@@ -89,9 +94,13 @@ router.put("/:id", async (req, res, next) => {
   // get the id from request params
   const { id } = req.params;
   // get form data from the request body
-  const { firstName } = req.body;
+  const { firstName,lastName,email,imageUrl,gpa } = req.body;
   const updatedObj = {
     firstName: firstName,
+    lastName: lastName,
+    email:email,
+    imageUrl:imageUrl,
+    gpa:gpa,
   };
   try {
     // if successfull:
