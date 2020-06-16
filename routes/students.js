@@ -37,22 +37,6 @@ router.get("/:id", async (req, res, next) => {
     next(err);
   }
 });
-router.get("/:id/changecampus", async (req, res, next) => {
-  // take the id from params
-  const { id } = req.params;
-  // query the database for a student with matching id
-  try {
-    // if successful:
-    const student = await Student.findByPk(id, { include: Campus });
-    // send back the student as a response
-    res.status(200).json(student);
-  } catch (err) {
-    // if error:
-    // handle error
-    next(err);
-  }
-});
-
 // Route to get students associated with a student
 // /api/students/:id/students
 // /api/students/456/students
