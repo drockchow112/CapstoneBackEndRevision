@@ -3,10 +3,12 @@ var router = express.Router();
 
 // Subrouters;
 const usersRouter=require("./users");
+const itemsRouter=require("./items");
 
 
 // Mount our subrouters to assemble our apiRouter;
 router.use("/users",usersRouter)
+router.use("/items",itemsRouter)
 
 
 // Error handling middleware;

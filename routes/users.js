@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { User } = require("../database/models");
+const { User,Item } = require("../database/models");
 
 
 /* GET all users. */
@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
   // try to get users object from database
   try {
     // users will be the result of the user.findAll promise
-    const users = await User.findAll();
+    const users = await User.findAll({ include: Item });
 
     // if users is valid, it will be sent as a json response
     console.log(users);
