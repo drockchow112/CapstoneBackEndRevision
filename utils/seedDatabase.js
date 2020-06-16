@@ -1,4 +1,4 @@
-const { Campus, Student } = require("../database/models");
+const { Campus, Student,User } = require("../database/models");
 
 const seedDatabase = async () => {
   await Promise.all([
@@ -21,6 +21,8 @@ const seedDatabase = async () => {
     Student.create({ firstName: "Sally", lastName: "Chen",email:"chen@gmail.com", campusId: 1,gpa:3.4}),
     Student.create({ firstName: "Annie", lastName: "Chen",email:"chenye@gmail.com", campusId: 1 }),
     Student.create({ firstName: "Leon", lastName: "Xin",email:"Leon@gmail.com", campusId: 2, gpa:3.2}),
+    User.create({userName: "Leon", password: "12355",email:"Leon@gmail.com",}),
+    User.create({userName: "jiang", password: "Xin2234",email:"Jiang@gmail.com"}),
   ]);
 };
 
