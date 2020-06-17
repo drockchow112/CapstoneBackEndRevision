@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { Item } = require("../database/models");
+const { Item,User } = require("../database/models");
 
 
 /* GET all items. */
@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
   // try to get items object from database
   try {
     // items will be the result of the item.findAll promise
-    const items = await Item.findAll();
+    const items = await Item.findAll({include:User});
 
     // if items is valid, it will be sent as a json response
     console.log(items);
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res, next) => {
     // query the database for a item with matching id
     try {
       // if successful:
-      const item = await Item.findByPk(id);
+      const item = await Item.findByPk(id,{include:User});
       // send back the item as a response
       res.status(200).json(item);
     } catch (err) {

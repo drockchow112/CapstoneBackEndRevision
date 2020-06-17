@@ -28,7 +28,7 @@ router.get("/:id", async (req, res, next) => {
   // query the database for a user with matching id
   try {
     // if successful:
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id,{ include: Item });
     // send back the user as a response
     res.status(200).json(user);
   } catch (err) {
