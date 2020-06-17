@@ -27,15 +27,16 @@ const syncDatabase = () => {
     db.sync();
   } else {
     console.log("As a reminder, the forced synchronization option is on");
-    db.sync({ force: true })
-      .then(() => seedDatabase())
+    //don't reflash the seedDatabase
+    db.sync({ force: false })
+      //.then(() => seedDatabase())
       .catch((err) => {
-        if (err.name === "SequelizeConnectionError") {
-          createLocalDatabase();
-          seedDatabase();
-        } else {
+        //if (err.name === "SequelizeConnectionError") {
+          //createLocalDatabase();
+          //seedDatabase();
+        //} else {
           console.log(err);
-        }
+       // }
       });
   }
 };
