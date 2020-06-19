@@ -13,13 +13,17 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
+const passport = require("passport");
+const session = require("express-session");
 
 // Utilities;
+const SequelizeStore = require("connect-session-sequelize")(session.Store); //create the store for sessions
 const createLocalDatabase = require("./utils/createLocalDatabase");
 const seedDatabase = require("./utils/seedDatabase");
 
 // Our database instance;
 const db = require("./database");
+const sessionStore = new SequelizeStore({ db });
 
 // A helper function to sync our database;
 const syncDatabase = () => {
@@ -28,21 +32,38 @@ const syncDatabase = () => {
   } else {
     console.log("As a reminder, the forced synchronization option is on");
     //don't reflash the seedDatabase
-    db.sync({ force: false })
-      //.then(() => seedDatabase())
-      .catch((err) => {
-        //if (err.name === "SequelizeConnectionError") {
-          //createLocalDatabase();
-          //seedDatabase();
-        //} else {
+    db.sync({ force: true })
+      .then(() => seedDatabase())
+      .catch(err => {
+        if (err.name === "SequelizeConnectionError") {
+          createLocalDatabase();
+          seedDatabase();
+        } else {
           console.log(err);
-       // }
+        }
       });
   }
 };
 
 // Instantiate our express application;
 const app = express();
+
+//Passport authenticated session persistence. Restore authentications
+//state across HTTP requests.
+passport.serializeUser((user, done) => {
+  console.log("Start of serialization");
+  done(null, user.id); // appends the user to the request object
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    console.log("Start of deserialization");
+    const user = await db.models.user.findByPk(id);
+    done(null, user.id);
+  } catch (err) {
+    done(err);
+  }
+});
 
 // A helper function to create our app with configurations and middleware;
 const configureApp = () => {
@@ -53,6 +74,20 @@ const configureApp = () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(compression());
   app.use(cookieParser());
+
+  //create the session token
+  app.use(
+    session({
+      secret:
+        "a super secretive secret key string to encrypt and sign the cookie",
+      store: sessionStore,
+      resave: false,
+      saveUninitialized: false
+    })
+  );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   // Our apiRouter
   const apiRouter = require("./routes/index");
