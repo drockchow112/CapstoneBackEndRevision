@@ -2,6 +2,19 @@
 
 
 ---
+
+## Starting the Server
+
+To start up dev server with nodemon:
+
+```shell
+# Run the appropriate command based on your system:
+# On Mac/Linux:
+npm run dev
+# On Windows:
+npm run dev_windows
+```
+
 ## Setting up the server
 First ensure you have a database setup and have access to the passwrod, we recommend postgre or elephantsql.
 Create a `.env` file within the BackEnd directory and save your `LOCAL_DATABASE_PASSWORD` in this file.
@@ -36,16 +49,4 @@ Next back out of express directory and install these dependencies via `npm insta
 ```shell
 cd ..
 npm i compression dotenv helmet pgtools sequelize nodemon
-```
-
-## Starting the Server
-
-To start up dev server with nodemon:
-
-```shell
-# Run the appropriate command based on your system:
-# On Mac/Linux:
-npm run dev
-# On Windows:
-npm run dev_windows
 ```
