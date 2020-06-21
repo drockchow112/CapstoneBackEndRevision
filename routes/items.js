@@ -43,12 +43,13 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
     console.log(req.body);
   // Take the form data from the request body
-  const {name, price, quantity } = req.body;
+  const {name, barcode, imageUrl,userId } = req.body;
   // Create a item object
   const itemObj = {
     name: name,
-    price: price,
-    quantity:quantity,
+    barcode:barcode,
+    imageUrl:imageUrl,
+    userId:userId,
 
   };
   try {
