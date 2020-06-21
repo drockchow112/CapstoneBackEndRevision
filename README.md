@@ -1,41 +1,21 @@
-# TTP CRUD Project - Express Server
+# Cheapest Price Project - Express Server
 
-## Quick Start
-
-To start up dev server with nodemon:
-
-```shell
-# Run the appropriate command based on your system:
-# On Mac/Linux:
-npm run dev
-# On Windows:
-npm run dev_windows
-```
 
 ---
-
-Please make sure to create a `.env` file and save the `LOCAL_DATABASE_PASSWORD` variable if you are working locally.
+## Setting up the server
+First ensure you have a database setup and have access to the passwrod, we recommend postgre or elephantsql.
+Create a `.env` file within the BackEnd directory and save your `LOCAL_DATABASE_PASSWORD` in this file.
 
 ```shell
-LOCAL_DATABASE_PASSWORD=somePassword123
+LOCAL_DATABASE_PASSWORD=YourDatabasePassword
 ```
 
-If you have no password, please pass an empty string in single-quotes like so:
+If no password is set up for your database, please pass an empty string like so:
 
 ```shell
 LOCAL_DATABASE_PASSWORD=''
 ```
 
-## Getting Started
-
-You can either:
-
-- [Fork and/or clone this repo as a starting point](#Clone-repo)
-- [Use Express Generator and refactor your code](#Express-Generator)
-
-## Clone repo
-
-Clone the repo and set up with your own GitHub account
 
 ## Express Generator
 
@@ -45,39 +25,27 @@ You can use this Express Generator command, indicating the directory to build yo
 npx express-generator --no-view --git my-app
 ```
 
-It will not set a template engine (no need since you're creating an API). It will also create a `.gitignore` file for you.
-
 Move into the directory and install dependencies
 
 ```shell
 cd my-app
 npm install
 ```
-
-This is a good point to initialize a git repository and make your initial commit.
-
-Install these dependencies via `npm install`
+Next back out of express directory and install these dependencies via `npm install`:
 
 ```shell
-npm i compression dotenv helmet pgtools sequelize
+cd ..
+npm i compression dotenv helmet pgtools sequelize nodemon
 ```
 
-## Nodemon
+## Starting the Server
 
-I recommend installing `nodemon`
+To start up dev server with nodemon:
 
 ```shell
-npm i --save-dev nodemon
-```
-
-Add the following to the list of scripts in `package.json`:
-
-```json
-"dev": "npx nodemon ./bin/www"
-```
-
-Nodemon will automatically reload the server when file changes are detected.
-
-```shell
+# Run the appropriate command based on your system:
+# On Mac/Linux:
 npm run dev
+# On Windows:
+npm run dev_windows
 ```
